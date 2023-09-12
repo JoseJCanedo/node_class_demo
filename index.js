@@ -5,19 +5,25 @@ app.use('/static', express.static('public'));
 app.set("view engine", "ejs");
 
 app.get('/', function( req, res ){
-    res.render('home.ejs');
+    res.render('home.ejs',{name: null});
 })
 
-// app.get('/results', function( req, res ){
-//     // change to another ejs file with movie/show results info
-//     res.render('home.ejs');
-// })
+app.get('/path/:name', function( req, res ){
+    let name = req.params.name;
+    res.render('home.ejs',{name: name});
+})
 
-// app.get('/contact', function( req, res ){
-//     // change to another ejs file with contact info
-//     res.render('home.ejs');
-// })
+app.get('/query', function( req, res ){
+    let name = req.query.name;
+    let nameObject = {"name": name}
+    res.render('home.ejs', nameObject);
+})
 
 app.listen(3000, () => {
     console.log('started on port 3000')
 })
+
+
+// path param REQUIRED /home/678954390/... 
+// query param /home?foo=bar&bar=foo
+// PUT & POST/ CREATE & UPDATE body, from a form
